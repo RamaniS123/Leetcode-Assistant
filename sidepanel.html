@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Leetcode Assistant</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LeetCode Assistant</title>
   <link rel="stylesheet" href="sidepanel.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
-    <h2>Leetcode Assistant</h2>
-    
-    <button id="explainBtn">🔍 Explain Problem </button>
-    <button id="hintBtn">💡Get a Hint</button>
-    <button id="coachBtn">🧠 Coach Me Step by Step</button>
+    <h1 class="title">LeetCode Assistant</h1>
 
-    <div id="results" class="result-box"></div>
+    <button id="explainBtn" class="btn">🔍 Explain Problem</button>
+    <button id="hintBtn" class="btn">💡 Get a Hint</button>
+    <button id="coachBtn" class="btn">🧠 Coach Me Step by Step</button>
 
-    <h3>🗒️ Your Notes</h3>
-    <textarea id="notes" placeholder="Take notes here..."></textarea>
-    <button id="saveNotesBtn">Save Notes</button>
-    <button id="clearNotesBtn">Clear Notes</button>
+    <h3 class="section-title">💬 AI Response</h3>
+    <div id="results" class="box scrollable"></div>
+
+    <h3 class="section-title">✍️ Your Notes</h3>
+    <textarea id="notes" placeholder="Take Notes Here..." class="box scrollable"></textarea>
+
+    <button id="saveNotesBtn" class="btn save">Save Notes</button>
+    <button id="clearNotesBtn" class="btn clear">Clear Notes</button>
   </div>
   <script src="sidepanel.js"></script>
 </body>
