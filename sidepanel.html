@@ -1,28 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
+  <meta charset="UTF-8" />
   <title>Leetcode Assistant</title>
-  <link rel="stylesheet" href="sidepanel.css">
+  <link rel="stylesheet" href="sidepanel.css" />
 </head>
 <body>
   <div class="container">
-    <div class="header">
-      <h2>Leetcode Assistant</h2>
-    </div>
+    <h2>Leetcode Assistant</h2>
+    
+    <button id="explainBtn">🔍 Explain Problem </button>
+    <button id="hintBtn">💡Get a Hint</button>
+    <button id="coachBtn">🧠 Coach Me Step by Step</button>
 
-    <div class="actions">
-      <button id="summarizeBtn">Summarize</button>
-    </div>
+    <div id="results" class="result-box"></div>
 
-    <div class="notes">
-      <h3>Leetcode Notes</h3>
-      <textarea id="notes" placeholder="Take notes here"></textarea>
-      <button 
-      id="saveNotesBtn">Save Notes</button>
-    </div>
-
-    <div id="results"></div>
+    <h3>🗒️ Your Notes</h3>
+    <textarea id="notes" placeholder="Take notes here..."></textarea>
+    <button id="saveNotesBtn">Save Notes</button>
+    <button id="clearNotesBtn">Clear Notes</button>
   </div>
   <script src="sidepanel.js"></script>
 </body>
