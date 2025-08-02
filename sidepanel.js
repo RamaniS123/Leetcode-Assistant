@@ -72,10 +72,10 @@ async function handleAction(operation,url) {
   showResult("Loading..."); 
 
   try { 
-    const response = await fetch('http://localhost:8080/api/leetcode/assistant', { 
+    const response = await fetch('http://localhost:8080/api/leetcode/process', { 
       method: 'POST', 
       headers: { 'Content-Type': 'application/json'}, 
-      body: JSON.stringify({url, operation})
+      body: JSON.stringify({content: url, operation})
     }); 
 
     if (!response.ok) { 
