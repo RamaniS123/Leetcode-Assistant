@@ -9,14 +9,16 @@ import java.util.Map;
 
 @Service
 public class LeetcodeService {
-    // Get the properties defined in application properties
+    // Injects the Gemini API base URL from application.properties
     @Value("${gemini.api.url}")
     private String geminiAPIUrl;
+
+    // Injects the Gemini API key
     @Value("${gemini.api.key}")
     private String geminiAPIKey;
 
-    // Make an instance of web client
     private final WebClient webClient;
+
     private final ObjectMapper objectMapper;
 
     public LeetcodeService(WebClient.Builder webClientBuilder, ObjectMapper objectMapper) {
@@ -24,65 +26,65 @@ public class LeetcodeService {
         this.objectMapper = objectMapper;
     }
 
-    // Queries the AI model, gets the response, passes the response, and returns it as a String
+    // Handles request processing and response retrieval
     public String processContent(LeetcodeRequest request) {
-        // Built the prompt
+        // Build on prompt based on operation
         String prompt = buildPrompt(request);
 
-        // Query the AI model API
+        // Request body to send to Gemini API
         Map<String, Object> requestBody = Map.of(
-                "contents", new Object[]{
-                        Map.of("parts", new Object[]{
+                "contents", new Object[] {
+                        Map.of("parts", new Object[] {
                                 Map.of("text", prompt)
                         })
                 }
         );
 
-        // Response from API
-        System.out.println("Calling: " + geminiAPIUrl + geminiAPIKey);
-
-
+        // Send POST request to Gemini API and get raw JSON response
         String response = webClient.post()
                 .uri(geminiAPIUrl + geminiAPIKey)
                 .bodyValue(requestBody)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
-        // Parse the response
-        // Return response
+
+        // Extract the text from the response from Gemini's structured JSON response
         return extractTextFromResponse(response);
     }
 
+    // Helper method that parses and extracts meaningful text from the API response
     private String extractTextFromResponse(String response) {
         try {
             GeminiResponse geminiResponse = objectMapper.readValue(response, GeminiResponse.class);
+
             if (geminiResponse.getCandidates() != null && !geminiResponse.getCandidates().isEmpty()) {
                 GeminiResponse.Candidate firstCandidate = geminiResponse.getCandidates().get(0);
                 if (firstCandidate.getContent() != null &&
-                        firstCandidate.getContent().getParts() != null &&
                         !firstCandidate.getContent().getParts().isEmpty()) {
+                    // Return the first generated text from Gemini
                     return firstCandidate.getContent().getParts().get(0).getText();
                 }
             }
-            return "No content found in response";
-        } catch (Exception e){
+            return "No content found in response.";
+        } catch (Exception e) {
             return "Error Parsing: " + e.getMessage();
         }
     }
 
+    // Helper method to generate prompt text based on the selected operation
     private String buildPrompt(LeetcodeRequest request) {
-        StringBuilder prompt = new StringBuilder();
-        switch (request.getOperation()) {
-            case "summarize":
-                prompt.append("Provide a clear and concise summary of the following text in a few sentences:\n\n");
-                break;
-            case "suggest":
-                prompt.append("Based on the following content: suggest related topics and further reading. Format the response with clear headings and bullet points:\n\n");
-                break;
+        String url = request.getContent();
+        String operation = request.getOperation().toLowerCase();
+
+        switch(operation) {
+            case "explain":
+                return "Explain this problem in a concise, simple, and beginner-friendly manners:\n" + url;
+            case "hint":
+                return "Give one helpful hint (but not the full answer) for solving this LeetCode problem:\n" + url;
+            case "coach":
+                return "Give a short, step-by-step coaching plan (no more than 4 steps) to help solve this LeetCode problem efficiently:\n" + url;
             default:
-                throw new IllegalArgumentException("Unknown Operation: " + request.getOperation());
+                throw new IllegalArgumentException("Unknown operation: " + operation);
         }
-        prompt.append(request.getContent());
-        return prompt.toString();
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 // Map all the endpoints defined in this controller with this URL
-@RequestMapping("/api/research")
+@RequestMapping("/api/leetcode")
 // Allow accessing all the endpoints in this controller from any frontend
 @CrossOrigin(origins="*")
 // Make an all argument constructor with all the fields that are defined
