@@ -78,11 +78,11 @@ public class LeetcodeService {
 
         switch(operation) {
             case "explain":
-                return "Explain this problem in a concise, simple, and beginner-friendly manners:\n" + url;
+                return "Explain this problem in a concise, simple, and beginner-friendly manner:\n" + url;
             case "hint":
                 return "Give one helpful hint (but not the full answer) for solving this LeetCode problem:\n" + url;
             case "coach":
-                return "Give a short, step-by-step coaching plan (no more than 4 steps) to help solve this LeetCode problem efficiently:\n" + url;
+                return "Give a very short, step-by-step coaching plan (no more than 4 steps) to help solve this LeetCode problem efficiently:\n" + url;
             default:
                 throw new IllegalArgumentException("Unknown operation: " + operation);
         }
