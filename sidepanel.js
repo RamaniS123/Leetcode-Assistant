@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
       const notes = document.getElementById('notes').value; 
       chrome.storage.local.set({ [pageUrl]: notes}); 
 
-      alert('Notes saved!'); 
+      showToast('✅ Notes saved!');
     })
 
     // Clear notes button 
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
 
       document.getElementById('notes').value = ''; 
 
-      alert('Notes cleared!'); 
+      showToast('🗑️ Notes cleared!'); 
     }); 
 
     // Set up key buttons and call the backend for each 
@@ -66,6 +66,24 @@ document.addEventListener('DOMContentLoaded', ()=> {
     document.getElementById('coachBtn').addEventListener('click', () => handleAction('coach', tab.url)); 
   }); 
 }); 
+
+// Display Toasty messages
+function showToast(message) {
+  const toastContainer = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = message;
+  
+  toastContainer.appendChild(toast);
+
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    setTimeout(() => {
+      toast.remove();
+    }, 500);
+  }, 3000); 
+}
+
 
 // Handle calls to the backend API 
 async function handleAction(operation,url) { 
