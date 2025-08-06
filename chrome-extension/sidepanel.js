@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
 
       document.getElementById('notes').value = ''; 
 
-      showToast('🗑️ Notes cleared!'); 
+      showToast('🗑️ Notes cleared!');
     }); 
 
     // Set up key buttons and call the backend for each 
